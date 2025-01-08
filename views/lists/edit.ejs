@@ -1,0 +1,43 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+    <div class="row">
+        <div class="col-8 offset-2">
+    <h3>edit the list</h3>
+    <form method="post" action="/listings/<%= list._id %>?_method=PUT"  class="needs-validation" novalidate enctype="multipart/form-data">
+        <div>
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="listing[title]" value="<%=list.title%>" class="form-control" required>
+        </div>
+        <div>
+            <label for="description" class="form-label">description</label>
+            <textarea name="listing[description]"  class="form-control" required><%=list.description %></textarea>
+        </div>
+        <div class="mb-3">
+            originalimage <br>
+            <img src="<%= originalimage %>" alt="Preview of the original image" class="img-fluid">
+        </div>
+        <div>
+            <label for="image" class="form-label">upload Image</label>
+            <input type="file" name="listing[image]" class="form-control">
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div>
+                    <label for="price" class="form-label">price</label>
+                    <input type="number" name="listing[price]" value="<%= list.price %>" class="form-control"  required>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div>
+                    <label for="country" class="form-label">country</label>
+                    <input type="text" name="listing[country]" value="<%= list.country %>" class="form-control"  required>
+                </div>
+            </div>
+        </div>
+        <div>
+            <label for="location" class="form-label">location</label>
+            <input type="text" name="listing[location]" value="<%=list.location %>" class="form-control"  required>
+        </div><br>
+        <button class="btn add-btn">Edit</button>
+    </form></div></div>
+</body>
