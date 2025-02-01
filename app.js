@@ -95,7 +95,7 @@ app.use("/", usersRouter);
 
 // Root Route (Ensure Home Page Works)
 app.get("/", (req, res) => {
-    res.send("🌍 Wanderlist is Running Successfully!");
+    res.render("index.ejs");
 });
 
 // 404 Route
