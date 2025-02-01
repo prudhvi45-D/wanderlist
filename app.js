@@ -20,6 +20,7 @@ const User = require("./models/user.js");
 const listingsRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
 const usersRouter = require("./routes/user.js");
+const Listing = require("./models/listing.js");
 
 // Load environment variables
 const db_url = process.env.Atlasdb_url || "mongodb://localhost:27017/wanderlist"; // Fallback for local testing
@@ -87,6 +88,11 @@ app.get("/demo", async (req, res) => {
     let registeredUser = await User.register(fakeUser, "hello");
     res.send(registeredUser);
 });
+app.get("/", async (req, res) => {
+    const alllistings = await Listing.find({});
+    res.render("lists/index.ejs", { alllistings });
+});
+
 
 // Routes
 app.use("/listings", listingsRouter);
