@@ -94,9 +94,6 @@ app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", usersRouter);
 
 // Root Route (Ensure Home Page Works)
-app.get("/", (req, res) => {
-    res.render("lists/index.ejs");
-});
 
 // 404 Route
 app.all("*", (req, res, next) => {
