@@ -4,34 +4,38 @@
   const list = <%- JSON.stringify(list) %>; 
   console.log(list);
 </script>
- <br>
-  <div class="showpage">
-    <h3 class="card-title text-center"><%= list.title %></h3>
-    <br>
-    <div class="col-8 offset-2">
-      <div class="card mb-3 shadow-lg rounded">
-        <img src="<%= list.image?.url || '/path/to/default-image.jpg' %>" class="card-img-top" alt="Listing image">
-        <div class="card-body">
-          <p><i> owned by: <b><%= list.owner.username %></b></i></p> 
-          <p class="card-text">
-            <%= list.description %>
-            <hr>
-            <strong>&#8377;<%= list.price.toLocaleString("en-IN") %></strong><br>
-            <%= list.country %><br>
-            <%= list.location %>
-          </p>
-        </div>
+<br>
+<div class="showpage">
+  <h3 class="card-title text-center"><%= list.title %></h3>
+  <br>
+  <div class="col-8 offset-2">
+    <div class="card mb-3 shadow-lg rounded">
+      <img src="<%= list.image?.url || '/path/to/default-image.jpg' %>" class="card-img-top" alt="Listing image">
+      <div class="card-body">
+        <p><i> owned by: <b><%= list.owner.username %></b></i></p> 
+        <p class="card-text">
+          <%= list.description %>
+          <hr>
+          <strong>&#8377;<%= list.price.toLocaleString("en-IN") %></strong><br>
+          <%= list.country %><br>
+          <%= list.location %>
+        </p>
       </div>
     </div>
+  </div>
+
+  <% if (curuser && list.owner._id.equals(curuser._id)) { %>
     <div class="btns d-flex justify-content-center gap-3 mb-3">
       <a href="/listings/<%= list._id %>/edit" class="btn btn-primary">Edit</a>
       <form method="post" action="/listings/<%= list._id %>?_method=DELETE">
         <button class="btn btn-danger">Delete</button>
       </form>
     </div>
+  <% } %>
 
-    <hr>
-    <div class="col-8 offset-2 mt-3 mb-3">
+  <hr>
+  <div class="col-8 offset-2 mt-3 mb-3">
+    <% if (curuser) { %>
       <h2 class="text-center text-success">Leave a Review</h2>
       <form method="post" action="/listings/<%= list._id %>/reviews" class="needs-validation" novalidate>
         <div class="rating mb-3">
@@ -59,36 +63,41 @@
         </div>
         <button class="btn btn-success w-100">Submit</button>
       </form>
+    <% } else { %>
+      <p class="text-center">Please <a href="/login">login</a> to leave a review.</p>
+    <% } %>
 
-      <hr>
+    <hr>
 
-      <h4 class="text-center text-dark"><u>All Reviews</u></h4><br>
-      <div class="row">
-        <% if (list.review && list.review.length > 0) { %>
-          <% for (let review of list.review) { %>
-            <div class="col-12 col-md-5 mb-3 ms-3">
-              <div class="card shadow-sm">
-                <div class="card-body">
-                  <h5 class="card-title"><%= review.author.username %></h5>
-                  <p class="starability-result card-text" data-rating="<%= review.rating %>">
-                  </p>
-                  <p class="card-text"><%= review.comment %></p>
-                </div>
+    <h4 class="text-center text-dark"><u>All Reviews</u></h4><br>
+    <div class="row">
+      <% if (list.review && list.review.length > 0) { %>
+        <% for (let review of list.review) { %>
+          <div class="col-12 col-md-5 mb-3 ms-3">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title"><%= review.author.username %></h5>
+                <p class="starability-result card-text" data-rating="<%= review.rating %>">
+                </p>
+                <p class="card-text"><%= review.comment %></p>
+              </div>
+              <% if (curuser && review.author._id.equals(curuser._id)) { %>
                 <form method="post" action="/listings/<%= list._id %>/reviews/<%=review._id%>?_method=DELETE" class="mb-3">
                   <button class="btn btn-danger btn-sm w-100">Delete</button>
                 </form>
-              </div>
+              <% } %>
             </div>
-          <% } %>
-        <% } else { %>
-          <p class="text-center">No reviews yet.</p>
+          </div>
         <% } %>
-      </div>
-    </div><hr>
-    <div class="col-8 offset-2">
-      <h3>Where you will be</h3>
-      <div id="map"></div>
-      </div> 
-    </div>   
-    <script src="/js/map.js">
-    </script>
+      <% } else { %>
+        <p class="text-center">No reviews yet.</p>
+      <% } %>
+    </div>
+  </div>
+  <hr>
+  <div class="col-8 offset-2">
+    <h3>Where you will be</h3>
+    <div id="map"></div>
+  </div> 
+</div>   
+<script src="/js/map.js"></script>

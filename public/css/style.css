@@ -22,9 +22,7 @@ body {
     color: #222222 !important;
 }
 
-.navbar-collapse {
-    height: auto !important;
-}
+
 
 .f-info-links a {
     color: #222222;
@@ -112,12 +110,25 @@ body {
     border: 1px solid black;
     border-radius: 10px;
 }
-
-.f-social i:hover {
-    font-size: 3em;
-    color: #fe424d;
+.icons {
+    border: 1px solid transparent; 
+    display: inline-flex; 
+    align-items: center;
+    justify-content: center;
+    padding: 10px; 
+    border-radius: 10%;
+    transition: border-color 0.3s ease, transform 0.3s ease;
 }
 
+.icons i {
+    margin: 0; 
+    font-size: 2rem; 
+}
+
+.icons:hover {
+    border-color: #fe424d; 
+    transform: scale(1.1); 
+}
 
 @media (max-width: 768px) {
     .card-img-top {
@@ -178,5 +189,3 @@ body {
       height: 250px; 
     }
   }
-  
-  

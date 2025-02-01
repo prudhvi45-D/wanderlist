@@ -1,3 +1,4 @@
+
 if(process.env.NODE_ENV != "production")
 {
     require('dotenv').config()
@@ -22,7 +23,7 @@ const User=require("./models/user.js");
 const multer  = require('multer')
 const upload = multer({ dest: 'uploads/' })
 const db_url=process.env.Atlasdb_url;
-
+const Listing = require("./models/listing.js");
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsmate);
@@ -106,7 +107,7 @@ app.use((err, req, res, next) => {
     const { status = 500, message = "Something went wrong" } = err;
     res.status(status).render("lists/error.ejs", { message, status });
 });
-
+// Search routes
 // // Root Route
 // app.get("/", (req, res) => {
 //     res.send("Route success");
