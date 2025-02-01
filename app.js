@@ -95,7 +95,7 @@ app.use("/", usersRouter);
 
 // Root Route (Ensure Home Page Works)
 app.get("/", (req, res) => {
-    res.render("index.ejs");
+    res.render("lists/index.ejs");
 });
 
 // 404 Route
